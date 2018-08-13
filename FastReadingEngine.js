@@ -66,11 +66,7 @@ function FastReadingEngine(options){
 	}
 
 	this.getWaitDuration = function(){
-		let dur = baseDuration;
-		if (needsPuncMod()){
-			dur *= puncuationModifier;
-		}
-		return dur;
+		return baseDuration * getPuncMod() * getLengthMod();
 	}
 
 
@@ -103,10 +99,24 @@ function FastReadingEngine(options){
 		// In order of descending frequency
 		return lastChar === "." ||
 			   lastChar === "," ||
+			   lastChar === "\"" ||
 			   lastChar === ":" ||
 			   lastChar === "?" ||
 			   lastChar === "!";
 	}
+
+	function getPuncMod(){
+		if (needsPuncMod()){
+			return puncuationModifier;
+		}
+		return 1;
+	}
+
+	function getLengthMod(){
+		// Found experimentally. 0.8 at 1 character, 1 at 5 and 1.5 at 16
+		return 0.05*word.length + 0.75;
+	}
+
 
 
 	/* Based on provided options */
