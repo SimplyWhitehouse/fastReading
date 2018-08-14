@@ -10,7 +10,7 @@ let tmID = 0;
 
 function wordPartsToScreen(wordParts){
 	for (let i = 0; i < wordDivs.length; i++){
-		wordDivs[i].innerText = wordParts[i];
+		wordDivs[i].innerHTML = wordParts[i];
 	}
 }
 
