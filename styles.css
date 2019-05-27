@@ -6,8 +6,30 @@ html, body {
 	background: #444
 }
 
-/* Formatting the word area */
+/* Main app */
+#app {
+	height: 100%;
+	width: 100%;
+
+	display: grid;
+	grid-template-rows: auto 2fr 1fr;
+	grid-template-areas: "inputZone",
+						 "singleWord",
+						 "controls";
+}
+/* */
+
+
+/* Input Zone */
+#inputZone {
+	grid-area: "inputZone";
+}
+/* */
+
+
+/* Single word area */
 #singleWord {
+	grid-area: "singleWord";
 	font-family: courier;
 	font-size: 6em;
 	
@@ -34,5 +56,12 @@ html, body {
 #right {
 	text-align: left;
 	color: white;
+}
+/* */
+
+
+/* Controls Area */
+#controls {
+	grid-area: "controls";
 }
 /* */

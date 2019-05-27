@@ -33,6 +33,10 @@ function FastReadingEngine(options){
 		updateBaseDuration();
 	}
 
+	this.getWPM = function(){
+		return WPM;
+	}
+
 	/** Steps the current word to the next in the list
 	*/
 	this.step = function(){
@@ -46,6 +50,24 @@ function FastReadingEngine(options){
 		}
 
 		return success;
+	}
+
+	this.stepBackward = function(){
+		let success = true;
+		// If we aren't at the beginning of the list;
+		if (i > 0){
+			i--;
+			updateWordParts();
+		} else {
+			success = false;
+		}
+
+		return success;
+	}
+
+	this.goToIndex = function(index){
+		i = index;
+		updateWordParts();
 	}
 
 	this.goToStart = function(){
