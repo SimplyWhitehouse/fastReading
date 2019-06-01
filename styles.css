@@ -3,6 +3,7 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	color: white;
 	background: #444
 }
 
@@ -13,8 +14,8 @@ html, body {
 
 	display: grid;
 	grid-template-rows: auto 2fr 1fr;
-	grid-template-areas: "inputZone",
-						 "singleWord",
+	grid-template-areas: "inputZone"
+						 "singleWord"
 						 "controls";
 }
 /* */
@@ -22,14 +23,14 @@ html, body {
 
 /* Input Zone */
 #inputZone {
-	grid-area: "inputZone";
+	grid-area: inputZone;
 }
 /* */
 
 
 /* Single word area */
 #singleWord {
-	grid-area: "singleWord";
+	grid-area: singleWord;
 	font-family: courier;
 	font-size: 6em;
 	
@@ -62,6 +63,46 @@ html, body {
 
 /* Controls Area */
 #controls {
-	grid-area: "controls";
+	grid-area: controls;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	grid-template-areas: "wpm   arrows nothing"
+						 "hText hText  hText"
 }
+
+#controlArrows {
+	grid-area: arrows;
+	font-size: 3em;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+}
+
+#controlArrows > div {
+	text-align: center;
+	vertical-align: middle;
+	padding: 0.5em;
+}
+
+#controlArrows > div:hover {
+	background: #555
+}
+
+#highlightedTextArea {
+	grid-area: hText;
+	font-size: 0.5em;
+	color: #aaa;
+	padding: 10px;
+	--highlightedChild: 1;
+}
+
+#highlightedTextArea > span.highlight, #highlightedTextArea > span:hover {
+	color: white;
+	background: #777;
+}
+
+#highlightedTextArea:nth-child(2) {
+	color: white;
+	background: #777;
+}
+
 /* */

@@ -28,6 +28,10 @@ function FastReadingEngine(options){
 		this.goToStart();
 	}
 
+	this.getTextList = function(){
+		return strList;
+	}
+
 	this.setWPM = function(newWPM){
 		WPM = newWPM < minWPM ? minWPM : newWPM > maxWPM ? maxWPM : newWPM;
 		updateBaseDuration();

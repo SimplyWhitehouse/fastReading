@@ -69,42 +69,81 @@ function controlLoop(){
 	for (let control in controlsPressed){
 		if (controlsPressed[control]){
 			controlsFunctions[control]();
+			controlsPressed[control] = false;
 		}
 	}
 
-	// undo "pause" so we aren't constantly toggling
-	if (controlsPressed.togglePause) {
-		controlsPressed.togglePause = false;
-	}
+	requestAnimationFrame(controlLoop);
 }
+controlLoop();
 
 function speedUpFunc(){
+	console.log("speed up");
 	frn.setWPM(frn.getWPM() + 5);
 }
 
 function slowDownFunc(){
+	console.log("slow down");
 	frn.setWPM(frn.getWPM() - 5);
 }
 
 function stepForwardFunc(){
+	console.log("step forward");
 	frn.step();
+	wordPartsToScreen(frn.getWordParts());
+	pauseReading();
 }
 
 function stepBackwardFunc(){
+	console.log("step backward");
 	frn.stepBackward();
+	wordPartsToScreen(frn.getWordParts());
+	pauseReading();
 }
 
 let paused = true;
 function togglePauseFunc(){
+	console.log("toggle pause");
 	if (paused){
-		paused = false;
-		readLoop();
+		unpauseReading();
 	} else {
-		pause = true;
-		stopReadLoop();
+		pauseReading();
+	}
+}
+function pauseReading(){
+	paused = true;
+	stopReadLoop();
+}
+function unpauseReading(){
+	paused = false;
+	readLoop();
+}
+/*  */
+
+// Highlighted text area
+const highlightedTextArea = document.getElementById("highlightedTextArea");
+function loadHighlightedText(arr){
+	for (let i = 0; i < arr.length; i++){
+		const el = document.createElement("span");
+		el.onclick = gotoWordOnClick;
+		el.dataset.index = i;
+		el.innerText = arr[i] + " ";
+		highlightedTextArea.append(el);
 	}
 }
 
+function gotoWordOnClick(el){
+	const word = el.target;
+	const index = word.dataset.index;
+	frn.goToIndex(index);
+	wordPartsToScreen(frn.getWordParts());
+	pauseReading();
+	console.log(index);
+}
+/* */
+
+
+// Reading loop
 let tmID = 0;
 function readLoop(){
 	wordPartsToScreen(frn.getWordParts());
@@ -119,3 +158,12 @@ function stopReadLoop(){
 	window.clearTimeout(tmID);
 }
 /* */
+
+
+// Set up buttons
+const btn_loadText = document.getElementById("btn_loadText");
+const textInput = document.getElementById("textInput");
+btn_loadText.onclick = function(){
+	frn.setText(textInput.value);
+	loadHighlightedText(frn.getTextList());
+}
